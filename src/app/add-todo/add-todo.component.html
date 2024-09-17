@@ -1,0 +1,31 @@
+<H1>Add Todo</H1>
+<div class="container" *ngIf="todo">
+    <div class="alert alert-warning" *ngIf="todoForm.dirty && todoForm.invalid">Enter valid values</div>
+    <div class="alert alert-warning" *ngIf="todoForm.dirty && todoId.invalid">TodoId is required</div>
+    <div class="alert alert-warning" *ngIf="todoForm.dirty && description.invalid">Description must be minimun 5 character</div>
+    <div class="alert alert-warning" *ngIf="todoForm.dirty && targetDate.invalid">Target Date is required</div>
+    <form (ngSubmit)="!todoForm.invalid && createTodo()" #todoForm="ngForm">
+
+        <fieldset class="form-group">
+            <label>TodoId</label>
+            <input type="text" class="form-control" [(ngModel)]="todo.todoId" name="todoId" required="true" #todoId="ngModel">
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label>Description</label>
+            <input type="text" class="form-control" [(ngModel)]="todo.description" name="description" required="true"
+                minlength="5" #description="ngModel">
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label>Target Date</label>
+            <input type="date" class="form-control" [ngModel]="todo.targetDate | date: 'yyyy-MM-dd'"
+                (ngModelChange)="todo.targetDate=$event" name="targetDate" required="true" #targetDate="ngModel">
+        </fieldset>
+
+        <div>
+            <button class="btn btn-success me-2" type="submit">Save</button>
+            <button class="btn btn-success" (click)="backToTodos()">Cancel</button>
+        </div>
+    </form>
+</div>

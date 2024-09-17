@@ -1,0 +1,10 @@
+<h1>Welcome!</h1>
+<div class="container">
+    Welcome {{name}}. You can manage your todos <a routerLink="/todos">here</a>
+</div>
+<div class="container">
+    <a (click)="getWelcomeMessageWithPathVariable()" class="btn btn-success">WelcomeMessage</a>
+</div>
+
+<h3 *ngIf="backendMessage">Backend Service message</h3>{{backendMessage}}
+<h3 *ngIf="backendErrorMessage" class="text-danger">{{backendErrorMessage}}</h3>

@@ -1,0 +1,20 @@
+.footer {
+    position: fixed;          /* Stays fixed at the bottom */
+    bottom: 0;                /* Aligned to the bottom */
+    width: 100%;              /* Full width of the viewport */
+    background-color: #222222; /* Footer background color */
+    display: flex;            /* Flexbox layout for aligning content */
+    justify-content: flex-end; /* Align content to the right */
+    padding-right: 20px;      /* Adds space from the right edge */
+}
+
+.container {
+    display: flex;            /* Ensures the text inside is part of the flex layout */
+    align-items: center;      /* Vertically centers the content */
+    justify-content: flex-end; /* Ensures content is pushed to the right */
+    height: 40px;             /* Matches footer height */
+}
+
+.text-white {
+    color: #6c757d !important; /* Bootstrap muted color */
+}
