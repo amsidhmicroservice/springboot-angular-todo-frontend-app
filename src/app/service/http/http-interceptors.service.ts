@@ -26,10 +26,8 @@ export function httpBasicAuthInterceptor(request: HttpRequest<unknown>, next: Ht
   let password = 'Pass@123';
   let basicAuthHeaderString = 'Basic ' + btoa(username + ':' + password);
 
-  let clonedRequest = request.clone({
-    setHeaders: {
-      Authorization: basicAuthHeaderString
-    }
+  const clonedRequest = request.clone({
+    headers: request.headers.set('Authorization',basicAuthHeaderString)
   });
 
   console.log('Interceptor executed, header added:', clonedRequest);
