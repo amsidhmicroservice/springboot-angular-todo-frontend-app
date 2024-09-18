@@ -1,6 +1,6 @@
-import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,12 @@ export class HttpInterceptorsService {
 }
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  console.log('Calling backend API-> ' + req.url);
-  return next(req);
+  console.log('Request API-> ' + req.url);
+  return next(req).pipe(tap(event => {
+    if (event.type === HttpEventType.Response) {
+      console.log(req.url, 'returned a response with status', event.status);
+    }
+  }));;
 }
 
 export function httpBasicAuthInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
