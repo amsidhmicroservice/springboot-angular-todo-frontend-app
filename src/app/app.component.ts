@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WelcomeComponent } from "./welcome/welcome.component";
+import { FooterComponent } from "./footer/footer.component";
 import { LoginComponent } from "./login/login.component";
 import { MenuComponent } from "./menu/menu.component";
-import { FooterComponent } from "./footer/footer.component";
+import { WelcomeComponent } from "./welcome/welcome.component";
 
 @Component({
   selector: 'app-root',

@@ -29,10 +29,9 @@ export class TodoDataService {
   getTodo(username: string, todoId: number) {
     return this.httpClient.get<Todo>(`http://localhost:8181/user/${username}/todos/${todoId}`);
   }
-
-  
-
 }
+
+
 
 export class User {
   constructor(public username: string,
