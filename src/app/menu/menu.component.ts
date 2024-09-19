@@ -1,6 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BasicAuthService } from '../service/data/basic-auth.service';
 import { HardCodedAuthenticationService } from '../service/hard-coded-authentication.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { HardCodedAuthenticationService } from '../service/hard-coded-authentica
   styleUrl: './menu.component.css'
 })
 export class MenuComponent {
-  constructor(public hardCodedAuthenticatedService: HardCodedAuthenticationService) {
+  constructor(public hardCodedAuthenticatedService: HardCodedAuthenticationService, public basicAuthService: BasicAuthService) {
 
   }
 

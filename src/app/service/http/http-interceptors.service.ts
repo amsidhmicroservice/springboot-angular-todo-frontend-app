@@ -1,6 +1,7 @@
 import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { BasicAuthService } from '../data/basic-auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +22,16 @@ export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerF
 
 export function httpBasicAuthInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Inside HttpInterceptorForBasicAuthService');
+  const authToken = inject(BasicAuthService).getAuthenticateToken()
 
-  let username = 'dummy';
-  let password = 'Pass@123';
-  let basicAuthHeaderString = 'Basic ' + btoa(username + ':' + password);
+  if (authToken) {
+    console.log("authToken=" + authToken)
+    request = request.clone({
+      headers: request.headers.set('Authorization', authToken)
+    });
+    console.log('Interceptor executed, header added:', request);
+    return next(request);
+  }
+  return next(request);
 
-  const clonedRequest = request.clone({
-    headers: request.headers.set('Authorization',basicAuthHeaderString)
-  });
-
-  console.log('Interceptor executed, header added:', clonedRequest);
-  return next(clonedRequest);
 }

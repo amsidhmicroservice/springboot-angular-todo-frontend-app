@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BACK_END_API } from '../../app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +11,24 @@ export class TodoDataService {
   }
 
   retriveAllToDos(username: string) {
-    return this.httpClient.get<User>(`http://localhost:8181/user/${username}/todos`);
+    return this.httpClient.get<User>(`${BACK_END_API}/user/${username}/todos`);
   }
 
   createTodo(username: string, todo: Todo) {
-    return this.httpClient.post<User>(`http://localhost:8181/user/${username}/todos`, todo);
+    return this.httpClient.post<User>(`${BACK_END_API}/user/${username}/todos`, todo);
   }
 
 
   updateTodo(username: string, todoId: number, todo: Todo) {
-    return this.httpClient.put<User>(`http://localhost:8181/user/${username}/todos/${todoId}`, todo);
+    return this.httpClient.put<User>(`${BACK_END_API}/user/${username}/todos/${todoId}`, todo);
   }
 
   deleteTodo(username: string, todoId: number) {
-    return this.httpClient.delete<User>(`http://localhost:8181/user/${username}/todos/${todoId}`);
+    return this.httpClient.delete<User>(`${BACK_END_API}/user/${username}/todos/${todoId}`);
   }
 
   getTodo(username: string, todoId: number) {
-    return this.httpClient.get<Todo>(`http://localhost:8181/user/${username}/todos/${todoId}`);
+    return this.httpClient.get<Todo>(`${BACK_END_API}/user/${username}/todos/${todoId}`);
   }
 }
 

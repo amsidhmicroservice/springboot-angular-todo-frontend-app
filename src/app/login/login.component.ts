@@ -1,7 +1,9 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
+import { BasicAuthService } from '../service/data/basic-auth.service';
 import { HardCodedAuthenticationService } from '../service/hard-coded-authentication.service';
 
 
@@ -19,9 +21,7 @@ export class LoginComponent {
   errorMessage: string = 'Invalid credentials'
   invalidLogin: boolean = false
 
-  route: Router
-  constructor(route: Router, public hardCodedAuthenticatedService: HardCodedAuthenticationService) {
-    this.route = route
+  constructor(public route: Router, public hardCodedAuthenticatedService: HardCodedAuthenticationService, public basicAuthService: BasicAuthService) {
   }
 
   handleLogin(): void {
@@ -36,5 +36,22 @@ export class LoginComponent {
     console.log("username :" + this.username + " and password:" + this.password)
   }
 
- 
+
+  handleBasicAuthLogin(): void {
+    this.basicAuthService.handleUserLogin(this.username, this.password).subscribe({
+      next: (response) => {
+        console.log('Valid User')
+        this.route.navigate(['welcome', this.username])
+        this.invalidLogin = false;
+      },
+      error: (error) => {
+        console.log('InValid User')
+        this.invalidLogin = true;
+      },
+      complete: () => {
+        console.log('API call completed');
+      }
+    });
+  }
+
 }
