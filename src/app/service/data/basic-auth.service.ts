@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BACK_END_API } from '../../app.constants';
+import { AUTH_TOKEN, AUTHENTICATED_USER, BACK_END_API } from '../../app.constants';
+import { map } from 'rxjs';
 
-const AUTH_TOKEN = 'authToken';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,14 @@ export class BasicAuthService {
   }
 
   handleUserLogin(username: string, password: string) {
-    const basicAuthHeaderString = 'Basic ' + btoa(username + ':' + password);
-    sessionStorage.setItem(AUTH_TOKEN, basicAuthHeaderString);
-
-    return this.httpClient.get<BasicAuthResponse>(
-      `${BACK_END_API}/user/auth/${username}/${password}`);
+    return this.httpClient.post<JwtTokenResponse>(`${BACK_END_API}/authenticate`, { username, password }).pipe(
+      map(data => {
+        sessionStorage.setItem(AUTH_TOKEN, `Bearer ${data.token}`);
+        sessionStorage.setItem(AUTHENTICATED_USER, username);
+        return data;
+      }
+      )
+    );
   }
 
   // Utility to check if sessionStorage is available
@@ -49,8 +52,19 @@ export class BasicAuthService {
 
 }
 
-class BasicAuthResponse {
-  message: string = '';
-  constructor(message: string) {
+class JwtTokenResponse {
+  token: string = '';
+  constructor(token: string) {
+    this.token = token;
+  }
+}
+
+class JwtTokenRequest {
+  username: string;
+  password: string;
+
+  constructor(username: string, password: string) {
+    this.username = username;
+    this.password = password;
   }
 }

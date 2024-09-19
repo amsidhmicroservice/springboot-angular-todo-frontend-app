@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { BasicAuthService } from '../service/data/basic-auth.service';
 import { HardCodedAuthenticationService } from '../service/hard-coded-authentication.service';
-
+import { AUTH_TOKEN } from '../app.constants';
 
 @Component({
   selector: 'app-login',
